@@ -1,0 +1,8 @@
+{
+  "name": "Soverint",
+  "short_name": "Soverint",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "description": "Mission-based AI workspace"
+}

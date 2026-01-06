@@ -1,0 +1,36 @@
+{
+  "domain": "writing",
+  
+  "subcategories": [
+    { "id": "1.1", "name": "Artikel" },
+    { "id": "1.2", "name": "Buku" },
+    { "id": "1.3", "name": "Novel" },
+    { "id": "1.4", "name": "Cerpen" },
+    { "id": "1.5", "name": "Copywriting Pemasaran" },
+    { "id": "1.6", "name": "Script Video" },
+    { "id": "1.7", "name": "Script Podcast" },
+    { "id": "1.8", "name": "Esai Akademik" },
+    { "id": "1.9", "name": "Makalah" },
+    { "id": "1.10", "name": "Skripsi" },
+    { "id": "1.11", "name": "Thesis" },
+    { "id": "1.12", "name": "AI-Content Creation" }
+  ],
+  
+  "intent_schema": {
+    "purpose": ["Educate", "Inform", "Entertain", "Persuade", "Document"],
+    "target_audience": "string",
+    "language": ["id", "en", "other"]
+  },
+  
+  "preference_schema": {
+    "tone": ["Formal", "Casual", "Technical", "Storytelling"],
+    "approx_length": ["Short", "Medium", "Long"]
+  },
+  
+  "context_schema": {
+    "references": "url[]?",
+    "style_reference": "string?",
+    "existing_assets": "file[]?",
+    "notes": "text?"
+  }
+}

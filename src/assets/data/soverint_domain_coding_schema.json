@@ -1,0 +1,35 @@
+{
+  "domain": "coding_programming",
+  
+  "subcategories": [
+    { "id": "2.1", "name": "Web Development" },
+    { "id": "2.2", "name": "Web App / Tools" },
+    { "id": "2.3", "name": "Aplikasi Mobile" },
+    { "id": "2.4", "name": "Landing Page / Web Statis" },
+    { "id": "2.5", "name": "AI Agent Development" },
+    { "id": "2.6", "name": "Green & Secure Software" }
+  ],
+  
+  "intent_schema": {
+    "purpose": ["Build", "Refactor", "Optimize", "Debug", "Integrate"],
+    "target_users": "string",
+    "complexity": ["Simple", "Medium", "Complex"]
+  },
+  
+  "technical_direction_schema": {
+    "environment": ["Web", "Mobile", "Backend", "CLI", "Hybrid"],
+    "preferred_stack": ["JavaScript", "Python", "Other"]
+  },
+  
+  "constraint_schema": {
+    "timeline": ["1-2 days", "1 week", "2-4 weeks", "1-3 months"],
+    "quality_focus": ["Performance", "Security", "Maintainability"]
+  },
+  
+  "context_schema": {
+    "references": "url[]?",
+    "dependencies": "string[]?",
+    "existing_codebase": "file[]?",
+    "notes": "text?"
+  }
+}

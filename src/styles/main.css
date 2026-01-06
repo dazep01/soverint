@@ -1,0 +1,528 @@
+  :root {
+    /* Palet Warna: Cyber-Organic */
+    --bg-deep: #050a07; /* Hampir hitam, hint hijau */
+    --bg-surface: #0f1a13;
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shine: rgba(255, 255, 255, 0.03);
+    
+    --primary: #2f5c3e; /* Hijau dasar */
+    --accent: #cdff65; /* Electric Lime - Tren 2024/25 */
+    --accent-glow: rgba(205, 255, 101, 0.4);
+    
+    --text-main: #f0fdf4;
+    --text-muted: #86a78f;
+    
+    --shadow-sm: 0 4px 12px rgba(0,0,0,0.3);
+    --shadow-lg: 0 20px 50px rgba(0,0,0,0.6);
+    
+    --radius-sm: 12px;
+    --radius-md: 20px;
+    --radius-lg: 32px;
+    
+    --font-ui: 'Inter', sans-serif;
+    --font-head: 'Nineteenth', serif;
+    
+    --nav-height: 70px;
+    --sidebar-width: 80px;
+  }
+
+  /* Reset & Base */
+  * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
+  
+  html, body {
+    height: 100%; width: 100%;
+    background-color: var(--bg-deep);
+    color: var(--text-main);
+    font-family: var(--font-ui);
+    overflow: hidden; /* App-like feel */
+  }
+
+  /* Background Noise Texture (Pro Detail) */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* Ambient Glow Gradient */
+  .ambient-glow {
+    position: fixed; width: 100vw; height: 100vh;
+    background: 
+      radial-gradient(circle at 10% 20%, rgba(47, 92, 62, 0.4) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(30, 60, 45, 0.3) 0%, transparent 40%);
+    z-index: 0; pointer-events: none;
+  }
+  .app-container {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+    height: 100%; width: 100%;
+    max-width: 100%; margin: 0 auto;
+  }
+
+  /* Header */
+  .header {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; z-index: 100;
+    /* Glass Effect Header */
+    background: rgba(5, 10, 7, 0.7);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .brand svg { width: 32px; height: 32px; filter: drop-shadow(0 0 10px var(--accent-glow)); }
+  .brand span { 
+    font-family: 'Gears of Peace', serif; font-size: 20px; font-weight: 600; letter-spacing: 0.5px; }
+
+  /* Navigation Bar (Adaptive) */
+  .nav-bar {
+    position: fixed; z-index: 1000;
+    background: rgba(20, 30, 24, 0.6);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+  }
+
+  .nav-track {
+    display: flex; position: relative;
+    align-items: center; justify-content: space-between;
+    height: 100%; width: 100%;
+  }
+
+  .nav-btn {
+    position: relative;
+    background: none; border: none; cursor: pointer;
+    color: var(--text-muted); transition: color 0.3s;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+  }
+  .nav-btn i { font-size: 24px; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .nav-btn.active { color: var(--accent); }
+  .nav-btn.active i { transform: scale(1.1); text-shadow: 0 0 15px var(--accent-glow); font-weight: bold; }
+
+  /* Floating Action Button (FAB) */
+  .nav-btn.fab {
+    background: var(--accent); color: var(--bg-deep);
+    border-radius: 50%; box-shadow: 0 8px 20px var(--accent-glow);
+  }
+  .nav-btn.fab i { font-weight: bold; font-size: 26px; }
+
+  /* Active Indicator Blob */
+  .nav-indicator {
+    position: absolute;
+    background: var(--glass-shine);
+    border-radius: 20px;
+    z-index: 1; pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* --- MOBILE SPECIFIC (Default) --- */
+  @media (max-width: 559px) {
+    .nav-bar {
+      bottom: 20px; left: 50%; transform: translateX(-50%);
+      width: 90%; max-width: 400px; height: 65px;
+      border-radius: 100px; padding: 0 10px;
+    }
+    .nav-btn { width: 50px; height: 50px; border-radius: 50%; }
+    .nav-btn.fab { width: 56px; height: 56px; transform: translateY(-25px); border: 4px solid var(--bg-deep); }
+    .nav-indicator { height: 40px; width: 40px; top: 12.5px; opacity: 0; } /* Simple dot or hidden on mobile nav */
+    .nav-btn.active + .nav-indicator { opacity: 1; }
+    
+    .panel { padding: 80px 20px 100px 20px; } /* Padding for header & bottom nav */
+  }
+
+  /* --- DESKTOP SPECIFIC (Sidebar Transformation) --- */
+  @media (min-width: 600px) {
+  
+ .blur-overlay {
+    /* Penempatan di paling bawah layar */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    width: 150px; /* Sesuaikan tinggi area blur yang diinginkan */
+    z-index: 900;   /* Pastikan di atas konten, tapi di bawah icon navigasi jika terpisah */
+
+    /* Warna dasar transparan (hijau gelap sesuai tema Anda) */
+    background-color: rgba(20, 35, 25, 0.4); 
+
+    /* Efek Blur utama */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    /* MASKING: Ini kunci efek memudar ke atas */
+    -webkit-mask-image: linear-gradient(to right, black 0%, transparent 100%);
+    mask-image: linear-gradient(to right, black 0%, transparent 100%);
+}
+    .header { padding-left: 100px; background: transparent; border: none; }
+    .nav-bar {
+      top: 20px; bottom: 20px; left: 20px;
+      width: 70px; height: auto;
+      flex-direction: column;
+      border-radius: 35px;
+      padding: 20px 0;
+      transform: none;
+    }
+    .nav-track { flex-direction: column; gap: 20px; justify-content: center; }
+    .nav-btn { width: 50px; height: 50px; border-radius: 16px; }
+    .nav-btn.fab { transform: none; margin-top: auto; margin-bottom: 10px; }
+    
+    /* Layout Content Adjustment */
+    .panels-viewport { padding-left: 100px; }
+    .panel { 
+      padding: 80px 40px; 
+      max-width: 1200px; margin: 0 auto; 
+      align-items: flex-start;
+    }
+    
+    /* Grid Enhancement for Desktop */
+    .grid-misi { grid-template-columns: repeat(2, 1fr) !important; }
+    .baris-kartu { grid-template-columns: repeat(3, 1fr); gap: 20px; justify-content: start; }
+    .kartu-dashboard { max-width: 100%; width: 100%; aspect-ratio: 16/9; }
+  }
+
+  /* --- PANELS & CONTENT --- */
+  .panels-viewport {
+    position: fixed; inset: 0;
+    overflow: hidden; z-index: 10;
+  }
+  .panels-track {
+    display: flex; width: 100%; height: 100%;
+    will-change: transform;
+  }
+  .panel {
+    flex: 0 0 100%; height: 100%; width: 100%;
+    overflow-y: auto; overflow-x: hidden;
+    display: flex; flex-direction: column;
+  }
+
+  /* Headers in Panel */
+  .page-header {
+    margin-bottom: 24px;
+    animation: fadeInDown 0.6s ease;
+  }
+  .page-header h1 { font-family: var(--font-head); font-size: 42px; color: var(--text-main); line-height: 1; }
+  .page-header p { color: var(--text-muted); font-size: 14px; margin-top: 5px; letter-spacing: 0.5px; }
+
+  /* CARDS (Bento Style) */
+  .bento-grid {
+    display: grid; gap: 16px; width: 100%;
+  }
+
+  .card-glass {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, background 0.2s;
+  }
+  .card-glass:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Dashboard Stats */
+  .stats-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px;
+  }
+  .stat-card {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 16px; text-align: center;
+    background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+  }
+  .stat-num { font-size: 28px; font-weight: 700; color: var(--accent); font-family: var(--font-ui); }
+  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 4px; }
+
+  /* Misi / Project Cards */
+  .grid-misi {
+    display: grid; grid-template-columns: 1fr; gap: 16px;
+    padding-bottom: 100px;
+  }
+
+  .mission-card {
+    position: relative; overflow: hidden;
+  }
+  .mission-card::after {
+    content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+    background: var(--accent); opacity: 0.5;
+  }
+  .mission-header {
+    display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;
+  }
+  .mission-title { font-size: 18px; font-weight: 600; color: #fff; }
+  .badge {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 20px; letter-spacing: 0.5px;
+  }
+  .badge.process { background: rgba(255, 220, 0, 0.15); color: #ffd700; border: 1px solid rgba(255, 220, 0, 0.3); }
+  .badge.done { background: rgba(0, 255, 128, 0.15); color: #00ff80; border: 1px solid rgba(0, 255, 128, 0.3); }
+
+  .ai-squad {
+    display: flex; gap: 8px; margin: 15px 0;
+  }
+  .ai-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--bg-surface); border: 1px solid var(--glass-border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  .mission-actions {
+    display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 10px;
+  }
+  .btn-action {
+    padding: 10px 0; border-radius: 12px; border: none; cursor: pointer;
+    font-weight: 600; font-size: 13px; font-family: var(--font-ui);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: filter 0.2s;
+  }
+  .btn-primary {
+    background: var(--glass-shine); color: var(--accent);
+    border: 1px solid rgba(205, 255, 101, 0.2);
+  }
+  .btn-danger {
+    background: rgba(255, 50, 50, 0.1); color: #ff5555;
+    border: 1px solid rgba(255, 50, 50, 0.2); width: 42px;
+  }
+  .btn-action:hover { filter: brightness(1.2); }
+
+  /* --- MODAL (iOS Sheet Style) --- */
+  .overlay {
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    display: flex; align-items: flex-end; justify-content: center;
+  }
+  .overlay.active { opacity: 1; pointer-events: auto; }
+  
+  .sheet {
+    width: 100%; max-width: 600px;
+    background: #141f18; /* Dark Green Surface */
+    border-top: 1px solid var(--glass-border);
+    border-radius: 24px 24px 0 0;
+    padding: 10px 20px 40px 20px;
+    transform: translateY(100%);
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  .overlay.active .sheet { transform: translateY(0); }
+
+  @media (min-width: 600px) {
+    .overlay { align-items: center; }
+    .sheet { border-radius: 24px; transform: scale(0.95); opacity: 0; transition: all 0.3s; }
+    .overlay.active .sheet { transform: scale(1); opacity: 1; }
+  }
+
+  .sheet-handle {
+    width: 40px; height: 5px; background: rgba(255,255,255,0.2);
+    border-radius: 10px; margin: 0 auto 20px auto;
+  }
+  
+  .form-group { margin-bottom: 15px; }
+  .form-group label { display: block; color: var(--text-muted); font-size: 12px; margin-bottom: 6px; }
+  .input-field {
+    width: 100%; padding: 14px;
+    background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+    border-radius: 12px; color: #fff; font-family: var(--font-ui);
+  }
+  .input-field:focus { border-color: var(--accent); }
+
+  /* Animation Keyframes */
+  @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Efek hover untuk kartu agent */
+#ai-agents-container .card-glass {
+    transition: transform 0.2s, border-color 0.2s;
+    z-index: 100;
+}
+#ai-agents-container .card-glass:hover {
+    transform: translateY(-2px);
+    border-color: rgba(205, 255, 101, 0.3);
+}
+
+/* Scroll untuk banyak agent */
+#panel-agents .grid-misi {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding-right: 5px;
+    z-index: 100;
+}
+#panel-agents .grid-misi::-webkit-scrollbar {
+    width: 4px;
+}
+#panel-agents .grid-misi::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 10px;
+}
+
+/* Hover effect untuk filter options */
+.filter-option:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.filter-option.active {
+  background: rgba(205, 255, 101, 0.1) !important;
+  color: var(--accent) !important;
+}
+
+/* Scroll area khusus untuk agents panel */
+#panel-agents .grid-misi {
+  max-height: calc(100vh - 250px);
+  overflow-y: auto;
+  padding-right: 5px;
+  padding-bottom: 80px;
+}
+
+#panel-agents .grid-misi::-webkit-scrollbar {
+  width: 4px;
+}
+
+#panel-agents .grid-misi::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 10px;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+}
+
+.empty-state i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+/* === FIX DROPDOWN FILTER - NEW === */
+#filter-button {
+  position: relative !important;
+  z-index: 99989 !important;
+  cursor: pointer !important;
+}
+
+#filter-menu {
+  display: none;
+  position: absolute !important;
+  top: 100% !important;
+  right: 0 !important;
+  margin-top: 8px !important;
+  width: 160px !important;
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 12px !important;
+  padding: 8px !important;
+  z-index: 999999 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Filter options styling */
+.filter-option {
+  display: block !important;
+  width: 100% !important;
+  padding: 8px 12px !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-main) !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  text-align: left !important;
+  margin: 2px 0 !important;
+  transition: background 0.2s !important;
+  z-index: 99999 !important;
+}
+
+.filter-option:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.filter-option.active {
+  background: rgba(205, 255, 101, 0.1) !important;
+  color: var(--accent) !important;
+}
+
+/* Parent wrapper untuk menjaga z-index */
+#panel-agents .card-glass:first-child {
+  position: relative;
+  z-index: 1000;
+}
+
+/* Kartu agents harus DI BAWAH */
+#ai-agents-container .card-glass {
+  position: relative;
+  z-index: 1 !important;
+}
+
+/* Pastikan container agents tidak overlap */
+#ai-agents-container {
+  position: relative;
+  z-index: 1 !important;
+  margin-top: 10px;
+}
+
+/* Spinner Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.ph-spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Responsive adjustments for React components */
+@media (max-width: 559px) {
+  .agent-card {
+    padding: 16px !important;
+  }
+  
+  .filter-option {
+    padding: 10px 14px !important;
+    font-size: 14px !important;
+  }
+  
+  #filter-menu {
+    width: 140px !important;
+    right: -10px !important;
+  }
+}
+
+/* Hover effect for filter options */
+.filter-option:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  transition: background 0.2s !important;
+}
+
+.filter-option.active {
+  background: rgba(205, 255, 101, 0.1) !important;
+  color: var(--accent) !important;
+}
+
+/* Scroll area for agents panel */
+#panel-agents .grid-misi {
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+  padding-right: 5px;
+  padding-bottom: 100px;
+}
+
+#panel-agents .grid-misi::-webkit-scrollbar {
+  width: 4px;
+}
+
+#panel-agents .grid-misi::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 10px;
+}

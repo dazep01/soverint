@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SoverInt - AI Mission Command Center</title>
+    <meta name="description" content="Orchestrate your AI agents & active missions with SoverInt" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/src/styles/main.css" as="style" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/flag-icons@6.6.6/css/flag-icons.min.css" as="style" />
+    <link rel="preload" href="https://unpkg.com/philosopher@latest/dist/philosopher.min.css" as="style" />
+    
+    <!-- Load external stylesheets -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@6.6.6/css/flag-icons.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/philosopher@latest/dist/philosopher.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/bold/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/fill/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/light/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/regular/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/thin/style.css">
+    
+    <!-- Flag Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    
+    <!-- Custom CSS -->
+    <style>
+      /* Base styles for loading state */
+
+ :root {
+    /* Palet Warna: Cyber-Organic */
+    --bg-deep: #050a07; /* Hampir hitam, hint hijau */
+    --bg-surface: #0f1a13;
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shine: rgba(255, 255, 255, 0.03);
+    
+    --primary: #2f5c3e; /* Hijau dasar */
+    --accent: #cdff65; /* Electric Lime - Tren 2024/25 */
+    --accent-glow: rgba(205, 255, 101, 0.4);
+    
+    --text-main: #f0fdf4;
+    --text-muted: #86a78f;
+    
+    --shadow-sm: 0 4px 12px rgba(0,0,0,0.3);
+    --shadow-lg: 0 20px 50px rgba(0,0,0,0.6);
+    
+    --radius-sm: 12px;
+    --radius-md: 20px;
+    --radius-lg: 32px;
+    
+    --font-ui: 'Inter', sans-serif;
+    --font-head: 'Nineteenth', serif;
+    
+    --nav-height: 70px;
+    --sidebar-width: 80px;
+  }
+
+  /* Reset & Base */
+  * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
+  
+  html, body {
+    height: 100%; width: 100%;
+    background-color: var(--bg-deep);
+    color: var(--text-main);
+    font-family: var(--font-ui);
+    overflow: hidden; /* App-like feel */
+  }
+
+  /* Background Noise Texture (Pro Detail) */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* Ambient Glow Gradient */
+  .ambient-glow {
+    position: fixed; width: 100vw; height: 100vh;
+    background: 
+      radial-gradient(circle at 10% 20%, rgba(47, 92, 62, 0.4) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(30, 60, 45, 0.3) 0%, transparent 40%);
+    z-index: 0; pointer-events: none;
+  }
+      .app-loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #0a0f0d;
+        color: #e0e0e0;
+      }
+      .app-loading .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(205, 255, 101, 0.2);
+        border-top: 4px solid var(--accent, #cdf567);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading placeholder -->
+    <div id="root">
+      <div class="app-loading">
+        <div class="spinner"></div>
+      </div>
+    </div>
+
+    <!-- Script bundle dari Vite akan dimasukkan di sini -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
